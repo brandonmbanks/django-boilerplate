@@ -1,0 +1,30 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - DEBUG=True
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+  web:
+    build: .
+    command: /var/www/deploy/start.local.sh
+    volumes:
+      - .:/var/www
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  nginx:
+    restart: always
+    build: ./deploy/nginx/.
+    ports:
+      - "80:80"
+    volumes:
+      - ./static:/var/www/static/
+volumes:
+  postgres-data:
+    driver: local
