@@ -1,0 +1,7 @@
+Django
+python-dotenv
+psycopg2
+gunicorn
+djangorestframework
+graphene[django]
+flake8
